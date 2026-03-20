@@ -5,6 +5,11 @@ import { createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, sign
 import { auth } from '../../config/firebase';
 import { FaEye, FaEyeSlash, FaUser, FaPhone, FaEnvelope, FaLock } from 'react-icons/fa';
 
+// Show message if Firebase is not configured
+if (!auth) {
+  console.warn('Firebase is not configured. Signup will not work without Firebase credentials.');
+}
+
 const SIGNUP_ERROR_MESSAGE = {
   'auth/email-already-in-use': 'This email is already registered. Please login or use a different email.',
   'auth/invalid-email': 'Please enter a valid email address.',

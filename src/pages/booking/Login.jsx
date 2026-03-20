@@ -5,6 +5,11 @@ import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 
 import { auth } from '../../config/firebase';
 import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from 'react-icons/fa';
 
+// Show message if Firebase is not configured
+if (!auth) {
+  console.warn('Firebase is not configured. Login will not work without Firebase credentials.');
+}
+
 const LOGIN_ERROR_MESSAGE = {
   'auth/invalid-email': 'Please enter a valid email address.',
   'auth/user-disabled': 'This account has been disabled. Please contact support.',
