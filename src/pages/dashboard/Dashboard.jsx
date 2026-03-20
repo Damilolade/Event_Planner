@@ -5,6 +5,7 @@ import {
   CheckCircle, XCircle, AlertCircle, PartyPopper,
   Heart, Briefcase, Sun, ArrowUpRight, ArrowDownRight
 } from 'lucide-react'
+import localImage from '../../assets/image.png'
 
 // Sample dashboard data
 const statsData = [
@@ -55,7 +56,7 @@ const upcomingEvents = [
     venue: 'Five Palm Jumeirah',
     guests: 150,
     status: 'confirmed',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=200'
+    image: localImage
   },
   {
     id: 2,
@@ -65,7 +66,7 @@ const upcomingEvents = [
     venue: 'Garden Pavilion',
     guests: 50,
     status: 'pending',
-    image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=200'
+    image: localImage
   },
   {
     id: 3,
@@ -75,7 +76,7 @@ const upcomingEvents = [
     venue: 'Grand Ballroom',
     guests: 200,
     status: 'confirmed',
-    image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=200'
+    image: localImage
   },
   {
     id: 4,
@@ -85,7 +86,7 @@ const upcomingEvents = [
     venue: 'Beach Club',
     guests: 120,
     status: 'pending',
-    image: 'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=200'
+    image: localImage
   }
 ]
 

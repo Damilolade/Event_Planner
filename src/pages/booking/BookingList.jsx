@@ -4,6 +4,7 @@ import {
   Calendar, MapPin, Users, Clock, Search, Filter, Plus, 
   ChevronLeft, ChevronRight, Heart, PartyPopper, Briefcase, Sun
 } from 'lucide-react'
+import localImage from '../../assets/image.png'
 
 // Sample all bookings data
 const allBookings = [
@@ -20,7 +21,7 @@ const allBookings = [
     status: 'confirmed',
     total: 5500,
     package: 'Premium Package',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=200'
+    image: localImage
   },
   {
     id: 2,
@@ -35,7 +36,7 @@ const allBookings = [
     status: 'pending',
     total: 1800,
     package: 'Standard Package',
-    image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=200'
+    image: localImage
   },
   {
     id: 3,
@@ -50,7 +51,7 @@ const allBookings = [
     status: 'confirmed',
     total: 8500,
     package: 'Premium Package',
-    image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=200'
+    image: localImage
   },
   {
     id: 4,
@@ -65,7 +66,7 @@ const allBookings = [
     status: 'completed',
     total: 4200,
     package: 'Standard Package',
-    image: 'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=200'
+    image: localImage
   },
   {
     id: 5,
@@ -80,7 +81,7 @@ const allBookings = [
     status: 'completed',
     total: 1200,
     package: 'Basic Package',
-    image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=200'
+    image: localImage
   },
   {
     id: 6,
@@ -95,7 +96,7 @@ const allBookings = [
     status: 'cancelled',
     total: 6000,
     package: 'Premium Package',
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=200'
+    image: localImage
   }
 ]
 
