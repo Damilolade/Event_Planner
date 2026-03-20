@@ -65,7 +65,7 @@ const router = createBrowserRouter(
 )
 
 const App = () => {
-  return <div style={{minHeight: '100vh', display: 'grid', placeItems: 'center', fontSize: '24px', background: '#111', color: '#fff'}}>Hello from App</div>
+  return <RouterProvider router={router} />
 }
 
 export default App

@@ -58,13 +58,20 @@ if (missingKeys.length === requiredEnvKeys.length && !hasAnyValidKey) {
   );
 }
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase only if we have valid config
+let app;
+try {
+  if (hasAnyValidKey) {
+    app = initializeApp(firebaseConfig);
+  }
+} catch (error) {
+  console.warn('Firebase initialization failed:', error);
+  app = null;
+}
 
 // Analytics is optional - only initialize if measurementId looks valid
-if (!isInvalidFirebaseValue(firebaseConfig.measurementId)) {
+if (app && !isInvalidFirebaseValue(firebaseConfig.measurementId)) {
   getAnalytics(app);
 }
 
-export const auth = getAuth(app);
-v
+export const auth = app ? getAuth(app) : null;

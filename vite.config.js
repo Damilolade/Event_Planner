@@ -8,4 +8,6 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  // If deploying to a subdirectory (e.g., GitHub Pages), uncomment and set:
+  // base: '/your-repo-name/',
 })
