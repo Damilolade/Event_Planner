@@ -3,18 +3,33 @@ import { Navigate } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../config/firebase'
 
+// Check if Firebase auth is available at module load time
+const isAuthConfigured = auth !== null && auth !== undefined
+
 const ProtectedBookingRoute = ({ children }) => {
-  const [loading, setLoading] = useState(true)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [loading, setLoading] = useState(isAuthConfigured)
+  const [isAuthenticated, setIsAuthenticated] = useState(isAuthConfigured)
 
   useEffect(() => {
+    // Skip auth check if Firebase is not configured
+    if (!isAuthConfigured) {
+      return
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setIsAuthenticated(!!user)
       setLoading(false)
     })
 
-    return () => unsubscribe()
+    return () => {
+      if (unsubscribe) unsubscribe()
+    }
   }, [])
+
+  // If auth not configured, render children immediately
+  if (!isAuthConfigured) {
+    return children
+  }
 
   if (loading) {
     return (
