@@ -256,10 +256,7 @@ const CheckOut = () => {
                 <div className="bg-slate-50 rounded-xl p-6">
                   <h3 className="font-semibold text-slate-800 mb-3">Bank Transfer Details</h3>
                   <div className="space-y-2 text-sm text-slate-600">
-                    <p><strong>Bank:</strong> First Gulf Bank</p>
-                    <p><strong>Account Name:</strong> 2706 Events LLC</p>
-                    <p><strong>Account Number:</strong> 1234567890</p>
-                    <p><strong>IBAN:</strong> AE12 3456 7890 1234 5678 90</p>
+                    <p className="text-yellow-600">Bank transfer details will be provided via email after booking confirmation.</p>
                     <p className="mt-3 text-xs text-slate-500">Please use your email as payment reference.</p>
                   </div>
                 </div>

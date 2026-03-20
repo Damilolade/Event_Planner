@@ -45,10 +45,16 @@ function isInvalidFirebaseValue(value) {
 }
 
 const missingKeys = requiredEnvKeys.filter((key) => isInvalidFirebaseValue(import.meta.env[key]));
-if (missingKeys.length > 0) {
-  throw new Error(
-    `Firebase config is invalid or missing required env variables: ${missingKeys.join(", ")}. ` +
-      "Copy .env.example to .env and paste your Firebase credentials from the Firebase console (Web app)."
+
+// Only throw error if at least one required key has a valid-looking value
+// This allows the app to load even without Firebase configured
+const hasAnyValidKey = requiredEnvKeys.some((key) => !isInvalidFirebaseValue(import.meta.env[key]));
+
+if (missingKeys.length === requiredEnvKeys.length && !hasAnyValidKey) {
+  console.warn(
+    "Firebase config is invalid or missing required env variables. " +
+    "The app will continue without Firebase authentication. " +
+    "To enable Firebase, copy .env.example to .env and add your Firebase credentials."
   );
 }
 
@@ -61,3 +67,4 @@ if (!isInvalidFirebaseValue(firebaseConfig.measurementId)) {
 }
 
 export const auth = getAuth(app);
+v

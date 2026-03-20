@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../config/firebase';
 import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from 'react-icons/fa';
 
@@ -21,8 +21,25 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [attempts, setAttempts] = useState(0);
+  const [locked, setLocked] = useState(false);
 
   const navigate = useNavigate();
+  const googleProvider = new GoogleAuthProvider();
+
+  const handleGoogleSignIn = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      await signInWithPopup(auth, googleProvider);
+      navigate('/booking/dashboard');
+    } catch (err) {
+      console.error('Google login error:', err);
+      setError('Google login failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +47,11 @@ const Login = () => {
     setLoading(true);
 
     const normalizedEmail = email.trim().toLowerCase();
+
+    if (locked) {
+      setError("Too many failed attempts. Please try again later or reset your password.");
+      return;
+    }
 
     if (!normalizedEmail) {
       setError("Email is required");
@@ -57,8 +79,16 @@ const Login = () => {
       navigate("/booking/dashboard");
     } catch (err) {
       console.error("Login error:", err);
-      const message = LOGIN_ERROR_MESSAGE[err.code] || "Login failed. Please try again.";
-      setError(message);
+      const newAttempts = attempts + 1;
+      setAttempts(newAttempts);
+      
+      if (newAttempts >= 5) {
+        setLocked(true);
+        setError("Too many failed attempts. Your account is locked for 15 minutes.");
+      } else {
+        const message = LOGIN_ERROR_MESSAGE[err.code] || `Login failed. ${5 - newAttempts} attempts remaining.`;
+        setError(message);
+      }
     } finally {
       setLoading(false);
     }
@@ -141,6 +171,15 @@ const Login = () => {
               Forgot Password?
             </Link>
           </div>
+
+          <button
+            type="button"
+            onClick={handleGoogleSignIn}
+            className="w-full bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-50 focus:ring-4 focus:ring-purple-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={loading}
+          >
+            Continue with Google
+          </button>
 
           <button 
             type="submit" 

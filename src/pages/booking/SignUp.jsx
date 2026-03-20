@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../config/firebase';
 import { FaEye, FaEyeSlash, FaUser, FaPhone, FaEnvelope, FaLock } from 'react-icons/fa';
 
@@ -24,6 +24,27 @@ const SignUp = () => {
   const [success, setSuccess] = useState(null);
 
   const navigate = useNavigate();
+  const googleProvider = new GoogleAuthProvider();
+
+  const handleGoogleSignIn = async () => {
+    setError(null);
+    setSuccess(null);
+    setLoading(true);
+    const trimmedName = name.trim();
+    try {
+      const userCred = await signInWithPopup(auth, googleProvider);
+      if (trimmedName) {
+        await updateProfile(userCred.user, { displayName: trimmedName });
+      }
+      setSuccess('Signed in with Google! Redirecting...');
+      setTimeout(() => navigate('/booking/dashboard'), 900);
+    } catch (err) {
+      console.error('Google signup error:', err);
+      setError('Google signup failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,8 +67,10 @@ const SignUp = () => {
       return;
     }
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters");
+    // Strong password validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setError("Password must be at least 8 characters with uppercase, lowercase, number, and special character");
       setLoading(false);
       return;
     }
@@ -63,7 +86,6 @@ const SignUp = () => {
       // Update user profile with display name
       await updateProfile(userCred.user, {
         displayName: trimmedName,
-        phoneNumber: phone || null,
       });
 
       setSuccess("Account created successfully! Redirecting to login...");
@@ -185,7 +207,7 @@ const SignUp = () => {
               <input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                placeholder="Create a password (min 6 characters)"
+                placeholder="Create a password (min 8 chars with uppercase, number, special)"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -206,6 +228,15 @@ const SignUp = () => {
               </button>
             </div>
           </div>
+
+          <button
+            type="button"
+            onClick={handleGoogleSignIn}
+            className="w-full bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-50 focus:ring-4 focus:ring-purple-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={loading}
+          >
+            Continue with Google
+          </button>
 
           <button 
             type="submit" 
