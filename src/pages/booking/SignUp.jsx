@@ -30,10 +30,15 @@ const SignUp = () => {
 
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
+  const isFirebaseConfigured = !!auth;
 
   const handleGoogleSignIn = async () => {
     setError(null);
     setSuccess(null);
+    if (!isFirebaseConfigured) {
+      setError('Firebase is not configured. Google signup is unavailable.');
+      return;
+    }
     setLoading(true);
     const trimmedName = name.trim();
     try {
@@ -55,6 +60,10 @@ const SignUp = () => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+    if (!isFirebaseConfigured) {
+      setError('Firebase is not configured. Signup is unavailable.');
+      return;
+    }
     setLoading(true);
 
     const trimmedName = name.trim();
@@ -238,7 +247,7 @@ const SignUp = () => {
             type="button"
             onClick={handleGoogleSignIn}
             className="w-full bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-50 focus:ring-4 focus:ring-purple-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={loading}
+            disabled={loading || !isFirebaseConfigured}
           >
             Continue with Google
           </button>

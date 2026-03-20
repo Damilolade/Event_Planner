@@ -31,9 +31,14 @@ const Login = () => {
 
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
+  const isFirebaseConfigured = !!auth;
 
   const handleGoogleSignIn = async () => {
     setError(null);
+    if (!isFirebaseConfigured) {
+      setError('Firebase is not configured. Google login is unavailable.');
+      return;
+    }
     setLoading(true);
     try {
       await signInWithPopup(auth, googleProvider);
@@ -49,7 +54,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    setLoading(true);
+      if (!isFirebaseConfigured) {
+        setError('Firebase is not configured. Login is unavailable.');
+        setLoading(false);
+        return;
+      }
 
     const normalizedEmail = email.trim().toLowerCase();
 
@@ -181,7 +190,7 @@ const Login = () => {
             type="button"
             onClick={handleGoogleSignIn}
             className="w-full bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-50 focus:ring-4 focus:ring-purple-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={loading}
+            disabled={loading || !isFirebaseConfigured}
           >
             Continue with Google
           </button>
