@@ -59,11 +59,11 @@ const Footer = () => {
           <div className='flex flex-col gap-2 text-slate-400 text-sm'>
             <div className='flex items-center gap-2'>
               <MapPin size={16} className='text-pink-400' />
-              <span>Los Angeles, California</span>
+              <span>Lagos, Nigeria</span>
             </div>
             <div className='flex items-center gap-2'>
               <Phone size={16} className='text-pink-400' />
-              <span>+1 (555) 270-6000</span>
+              <span>+2348086902551</span>
             </div>
             <div className='flex items-center gap-2'>
               <Mail size={16} className='text-pink-400' />
@@ -231,7 +231,8 @@ const Footer = () => {
           transition={{ delay: 0.4 }}
           className='text-slate-400 text-sm'
         >
-          © {new Date().getFullYear()} <span className='text-pink-400 font-semibold'>2706 Events</span>. All rights reserved.
+          © {new Date().getFullYear()} 
+          <span className='text-pink-400 font-semibold'>2706 Events</span>. All rights reserved.
         </motion.p>
 
       </div>
