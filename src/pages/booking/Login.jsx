@@ -92,7 +92,9 @@ const Login = () => {
       // Redirect to dashboard
       navigate("/booking/dashboard");
     } catch (err) {
-      console.error("Login error:", err);
+      console.error("[Login] Full error object:", err);
+      console.error("[Login] Error code:", err.code);
+      console.error("[Login] Error message:", err.message);
       const newAttempts = attempts + 1;
       setAttempts(newAttempts);
       

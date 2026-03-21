@@ -81,10 +81,10 @@ const SignUp = () => {
       return;
     }
 
-    // Strong password validation
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+    // Password validation (minimum 6 characters)
+    const passwordRegex = /^.{6,}$/;
     if (!passwordRegex.test(password)) {
-      setError("Password must be at least 8 characters with uppercase, lowercase, number, and special character");
+      setError("Password must be at least 6 characters");
       setLoading(false);
       return;
     }
@@ -221,7 +221,7 @@ const SignUp = () => {
               <input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                placeholder="Create a password (min 8 chars with uppercase, number, special)"
+                placeholder="Create a password (min 6 characters)"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
