@@ -8,6 +8,7 @@ import BookingSummary from './components/BookingSummary';
 import DeleteSelector from './components/DeleteSelector';
 import GuestSelector from './components/GuestSelector';
 import Payment from './components/Payment';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Import booking pages
 import Booking from './pages/booking/Booking';
@@ -65,7 +66,11 @@ const router = createBrowserRouter(
 )
 
 const App = () => {
-  return <RouterProvider router={router} />
+  return (
+    <ErrorBoundary>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
+  )
 }
 
 export default App
