@@ -22,11 +22,16 @@ import ProtectedBookingRoute from './components/ProtectedBookingRoute';
 import SignUp from './pages/booking/SignUp';
 import Login from './pages/booking/Login';
 import Dashboard from './pages/dashboard/Dashboard';
+import PageNotFound from './pages/PageNotFound';
+
+// DEBUG: Validating router configuration
+console.log('Router configuration starting...');
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />}>
       <Route index element={<Home />} />
+      {/* DEBUG: Added catch-all route for 404 */}
       <Route path='about' element={<About />} />
       <Route path='contact' element={<Contact />} />
       <Route path='login' element={<Login />} />
@@ -61,6 +66,9 @@ const router = createBrowserRouter(
         <Route path='booking/dashboard' element={<Dashboard />} />
         <Route path='booking/dashboard/checkout' element={<CheckOut />} />
       </Route>
+
+      {/* Catch-all route for 404 - must be last */}
+      <Route path='*' element={<PageNotFound />} />
     </Route>
   )
 )
